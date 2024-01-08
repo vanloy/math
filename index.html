@@ -36,7 +36,7 @@
                 text-align: center;
                 width: 100%;
                 position: fixed;
-                top: 10%;
+                top: 10%
             }
 
             .number{
@@ -89,10 +89,11 @@
 
     <body onload="main()">
         <h1 class="title">Frazione &#8594 Numero misto</h1>
+        <h1 class="title" id="streak" style="top:20%; color:#ff00f2;">Streak: 0</h1>
         <div class="center">
             <div>
-                <h1 class="number numerator" id="numerator">5</h1>
-                <h1 class="number" id="denominator">9</h1>
+                <h1 class="number numerator" id="numerator"></h1>
+                <h1 class="number" id="denominator"></h1>
             </div>
             <h1 style="font-size: 72px; margin-left: 10px; margin-right: 10px;">=</h1>
             <div style="margin-right: 20px;">
@@ -140,6 +141,8 @@
                 {
                     button.style.backgroundColor = "green";
                     button.innerHTML = "Corretto";
+
+                    document.getElementById("streak").innerHTML = "Streak: " + (parseInt(document.getElementById("streak").innerHTML.slice(-1)) + 1);
                 }
                 else
                 {
@@ -149,6 +152,8 @@
                     document.getElementById("inputNatural").value = correctNatural;
                     document.getElementById("inputNumerator").value = correctNumerator;
                     document.getElementById("inputDenominator").value = denominator;
+
+                    document.getElementById("streak").innerHTML = "Streak: 0";
                 }
 
                 document.getElementById("retry").style.display = "block";
