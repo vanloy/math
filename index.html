@@ -129,8 +129,8 @@
                 button = document.getElementById("check");
                 if(inputNatural == correctNatural && inputNumerator == correctNumerator && (inputDenominator == denominator || correctNumerator == 0))
                 {
-                    button.className = "correct";
                     button.style.backgroundColor = "green";
+                    button.innerHTML = "Corretto";
                 }
                 else
                 {
