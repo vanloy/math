@@ -142,7 +142,8 @@
                     button.style.backgroundColor = "green";
                     button.innerHTML = "Corretto";
 
-                    document.getElementById("streak").innerHTML = "Streak: " + (parseInt(document.getElementById("streak").innerHTML.slice(-1)) + 1);
+                    const r = /\d+/;
+                    document.getElementById("streak").innerHTML = "Streak: " + (parseInt(document.getElementById("streak").innerHTML.match(r)) + 1);
                 }
                 else
                 {
