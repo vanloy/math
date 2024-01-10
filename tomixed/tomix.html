@@ -151,6 +151,7 @@
                     document.getElementById("streak").innerHTML = "Streak: 0";
                 }
 
+                button.disabled = true;
                 document.getElementById("retry").style.display = "block";
             }
 
@@ -164,11 +165,8 @@
                 document.getElementById("inputNatural").value = null;
                 document.getElementById("inputNumerator").value = null;
                 document.getElementById("inputDenominator").value = null;
-            }
 
-            function getRandomInt(max) 
-            {
-                return Math.floor(Math.random() * max);
+                document.getElementById("check").disabled = false;
             }
         </script>
     </body>
