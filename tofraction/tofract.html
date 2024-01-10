@@ -88,17 +88,17 @@
     </head>
 
     <body onload="main()">
-        <h1 class="title">Numero misto &#8594 Frazione</h1>
+        <h1 class="title">Frazione &#8594 Numero misto</h1>
         <h1 class="title" id="streak" style="top:20%; color:#ff00f2;">Streak: 0</h1>
         <div class="center">
-            <div>
-                <h1 class="number" id="natural"></h1>
-            </div>
             <div>
                 <h1 class="number numerator" id="numerator"></h1>
                 <h1 class="number" id="denominator"></h1>
             </div>
-            <h1 style="font-size: 72px; margin-left: 10px; margin-right: 20px;">=</h1>
+            <h1 style="font-size: 72px; margin-left: 10px; margin-right: 10px;">=</h1>
+            <div style="margin-right: 20px;">
+                <input type="number" id="inputNatural">
+            </div>
             <div>
                 <input type="number" id="inputNumerator">
                 <h1 class="numerator"></h1>
@@ -117,26 +117,21 @@
 
                 let randomNumerator = Math.floor(Math.random() * randomDenominator) + 1;
                 document.getElementById("numerator").innerHTML = randomNumerator;
-
-                let randomNatural;
-                do{
-                    randomNatural = Math.floor(Math.random() * 10) + 1;
-                }while(randomNatural == 0);
-                document.getElementById("natural").innerHTML = randomNatural;
             }
 
             function check()
             {
                 numerator = document.getElementById("numerator").innerHTML;
                 denominator = document.getElementById("denominator").innerHTML;
-                natural = document.getElementById("natural").innerHTML;
+                inputNatural = document.getElementById("inputNatural").value;
                 inputNumerator = document.getElementById("inputNumerator").value;
                 inputDenominator = document.getElementById("inputDenominator").value;
 
-                correctNumerator = parseInt(natural * denominator) + parseInt(numerator);
+                correctNatural = Math.floor(numerator / denominator);
+                correctNumerator = numerator % denominator;
                 
                 button = document.getElementById("check");
-                if(inputNumerator == correctNumerator && inputDenominator == denominator)
+                if(inputNatural == correctNatural && inputNumerator == correctNumerator && (inputDenominator == denominator || correctNumerator == 0))
                 {
                     button.style.backgroundColor = "green";
                     button.innerHTML = "Corretto";
@@ -149,12 +144,14 @@
                     button.style.backgroundColor = "red";
                     button.innerHTML = "Sbagliato";
 
+                    document.getElementById("inputNatural").value = correctNatural;
                     document.getElementById("inputNumerator").value = correctNumerator;
                     document.getElementById("inputDenominator").value = denominator;
 
                     document.getElementById("streak").innerHTML = "Streak: 0";
                 }
 
+                button.disabled = true;
                 document.getElementById("retry").style.display = "block";
             }
 
@@ -165,8 +162,11 @@
                 document.getElementById("check").style.backgroundColor = "blue";
                 document.getElementById("retry").style.display = "none";
 
+                document.getElementById("inputNatural").value = null;
                 document.getElementById("inputNumerator").value = null;
                 document.getElementById("inputDenominator").value = null;
+
+                document.getElementById("check").disabled = false;
             }
         </script>
     </body>
