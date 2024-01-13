@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <style>
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            input{
+                font-size: 80px;
+                text-align: center;
+                width: 160px;
+                padding: 0px;
+                margin: 0px 12px 0px 12px;
+                box-sizing: border-box;
+                border: 5px solid grey;
+                border-radius: 12px;
+                -webkit-transition: 0.5s;
+                transition: 0.5s;
+                outline: none;
+            }
+
+            input:focus {
+                border: 5px solid rgb(0, 51, 255);
+            }
+
+            body{
+                font-family: Arial, sans-serif;
+                color: white;
+                background-color: black;
+            }
+
+            .title{
+                font-size: 72px;
+                text-align: center;
+                width: 100%;
+                position: fixed;
+                top: 10%
+            }
+
+            .number{
+                font-size: 72px;
+                text-align: center;
+                display: inline;
+                width: 96px;
+                padding: 0;
+                margin: 100px;
+            }
+
+            .center {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                height: 100%;
+            }
+            
+            button {
+                font-size: 64px;
+                width: 50%;
+                height: 10%;
+                background-color: #122dc5;
+                border: none;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                border-radius: 12px;
+            }
+
+            #check{
+                background-color: #122dc5;
+                position: fixed;
+                top: 65%;
+                left: 25%;
+            }
+
+            #retry{
+                background-color: #ff8800;
+                position: fixed;
+                display: none;
+                top: 80%;
+                left: 25%;
+            }
+        </style>
+
+        <title>MCD</title>
+    </head>
+
+    <body onload="main()">
+        <h1 class="title">Trova il massimo comune divisore</h1>
+        <h1 class="title" id="streak" style="top:20%; color:#ff00f2;">Streak: 0</h1>
+        <div class="center">
+            <div>
+                <h1 class="number" id="numberA"></h1>
+                <h1 class="number" id="numberB"></h1>
+            </div>
+            <div style="margin-top: 50px">
+                <h1 style="font-size: 72px; display: inline">MCD:</h1><input type="number" id="inputGcd">
+            </div>
+        </div>
+
+        <button id="check" onclick="check()">Verifica</button>
+        <button id="retry" onclick="retry()">Nuova frazione</button>
+
+        <script>
+            function main()
+            {
+                let divisor = Math.floor(Math.random() * 20) + 1;
+
+                let randomDenominator = (Math.floor(Math.random() * 10) + 1) * divisor;
+                document.getElementById("numberA").innerHTML = randomDenominator;
+
+                let randomNumerator = (Math.floor(Math.random() * 10) + 1) * divisor;
+                document.getElementById("numberB").innerHTML = randomNumerator;
+            }
+
+            function check()
+            {
+                numberA = document.getElementById("numberA").innerHTML;
+                numberB = document.getElementById("numberB").innerHTML;
+                inputGcd = document.getElementById("inputGcd").value;
+
+                let correctGcd = gcd(numberA, numberB)
+                
+                button = document.getElementById("check");
+                if(inputGcd == correctGcd)
+                {
+                    button.style.backgroundColor = "green";
+                    button.innerHTML = "Corretto";
+
+                    const r = /\d+/;
+                    document.getElementById("streak").innerHTML = "Streak: " + (parseInt(document.getElementById("streak").innerHTML.match(r)) + 1);
+                }
+                else
+                {
+                    button.style.backgroundColor = "red";
+                    button.innerHTML = "Sbagliato";
+
+                    document.getElementById("inputGcd").value = correctGcd;
+
+                    document.getElementById("streak").innerHTML = "Streak: 0";
+                }
+
+                button.disabled = true;
+                document.getElementById("retry").style.display = "block";
+            }
+
+            function retry()
+            {
+                main();
+                document.getElementById("check").innerHTML = "Verifica";
+                document.getElementById("check").style.backgroundColor = "blue";
+                document.getElementById("retry").style.display = "none";
+
+                document.getElementById("inputGcd").value = null;
+
+                document.getElementById("check").disabled = false;
+            }
+
+            function gcd(a, b) {
+                if (!b) {
+                    return a;
+                }
+
+                return gcd(b, a % b);
+            }
+        </script>
+    </body>
+</html>
