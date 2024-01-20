@@ -117,7 +117,8 @@
                 let randomDenominator = Math.floor(Math.random() * 10) + 1;
                 document.getElementById("denominator").innerHTML = randomDenominator;
 
-                let randomNumerator = Math.floor(Math.random() * randomDenominator) + 1;
+                let randomNumerator = Math.floor(Math.random() * 10 * randomDenominator) + 1;
+                console.log(Math.floor(Math.random() * randomDenominator) + 1);
                 document.getElementById("numerator").innerHTML = randomNumerator;
             }
 
