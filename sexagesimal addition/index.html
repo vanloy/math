@@ -1,0 +1,176 @@
+<html>
+    <head>
+        <style>
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            input{
+                font-size: 80px;
+                text-align: center;
+                width: 160px;
+                padding: 0px;
+                margin: 0px 12px 0px 12px;
+                box-sizing: border-box;
+                border: 5px solid grey;
+                border-radius: 12px;
+                -webkit-transition: 0.5s;
+                transition: 0.5s;
+                outline: none;
+            }
+
+            input:focus {
+                border: 5px solid rgb(0, 51, 255);
+            }
+
+            body{
+                font-family: Arial, sans-serif;
+                color: white;
+                background-color: black;
+            }
+
+            .title{
+                font-size: 72px;
+                text-align: center;
+                width: 100%;
+                position: fixed;
+                top: 10%
+            }
+
+            .number{
+                font-size: 72px;
+                text-align: center;
+                display: inline;
+                padding: 0;
+                margin: 10px;
+            }
+
+            .center {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                height: 100%;
+            }
+            
+            button {
+                font-size: 64px;
+                width: 50%;
+                height: 10%;
+                background-color: #122dc5;
+                border: none;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                border-radius: 12px;
+            }
+
+            #check{
+                background-color: #122dc5;
+                position: fixed;
+                top: 65%;
+                left: 25%;
+            }
+
+            #retry{
+                background-color: #ff8800;
+                position: fixed;
+                display: none;
+                top: 80%;
+                left: 25%;
+            }
+        </style>
+
+        <title>Addizione sessagesimale</title>
+    </head>
+
+    <body onload="main()">
+        <h1 class="title">Risolvi l'addizione</h1>
+        <h1 class="title" id="streak" style="top:20%; color:#ff00f2;">Streak: 0</h1>
+        <div class="center">
+            <div>
+                <h1 class="number" id="degree1"></h1>
+                <h1 class="number" id="minute1"></h1>
+                <h1 class="number" id="second1"></h1>
+
+                <h1 class="number">+</h1>
+
+                <h1 class="number" id="degree2"></h1>
+                <h1 class="number" id="minute2"></h1>
+                <h1 class="number" id="second2"></h1>
+            </div>
+            <div style="margin-top: 50px">
+                <h1 style="font-size: 72px; display: inline">Risultato:</h1>
+                <input type="number" id="inputDegree"><h1 class="number" id="degree2">°</h1>
+                <input type="number" id="inputMinute"><h1 class="number" id="degree2">'</h1>
+                <input type="number" id="inputSecond"><h1 class="number" id="degree2">"</h1>
+            </div>
+        </div>
+
+        <button id="check" onclick="check()">Verifica</button>
+        <button id="retry" onclick="retry()">Nuovo esercizio</button>
+
+        <script>
+            function main()
+            {
+                document.getElementById("degree1").innerHTML = (Math.floor(Math.random() * 360) + 1) + "°";
+                document.getElementById("minute1").innerHTML = (Math.floor(Math.random() * 59) + 1) + "\'";
+                document.getElementById("second1").innerHTML = (Math.floor(Math.random() * 59) + 1) + "\"";
+
+                document.getElementById("degree2").innerHTML = (Math.floor(Math.random() * 360) + 1) + "°";
+                document.getElementById("minute2").innerHTML = (Math.floor(Math.random() * 59) + 1) + "\'";
+                document.getElementById("second2").innerHTML = (Math.floor(Math.random() * 59) + 1) + "\"";
+            }
+
+            function check()
+            {
+                const r = /\d+/;
+
+                let seconds1 = parseInt(document.getElementById("degree1").innerHTML.match(r)) * 3600 + parseInt(document.getElementById("minute1").innerHTML.match(r)) * 60 + parseInt(document.getElementById("second1").innerHTML.match(r));
+                let seconds2 = parseInt(document.getElementById("degree2").innerHTML.match(r)) * 3600 + parseInt(document.getElementById("minute2").innerHTML.match(r)) * 60 + parseInt(document.getElementById("second2").innerHTML.match(r));
+                let inputSeconds= parseInt(document.getElementById("inputDegree").value) * 3600 + parseInt(document.getElementById("inputMinute").value) * 60 + parseInt(document.getElementById("inputSecond").value);
+
+                let correctSeconds = seconds1 + seconds2;
+
+                button = document.getElementById("check");
+                if(inputSeconds == correctSeconds)
+                {
+                    button.style.backgroundColor = "green";
+                    button.innerHTML = "Corretto";
+
+                    document.getElementById("streak").innerHTML = "Streak: " + (parseInt(document.getElementById("streak").innerHTML.match(r)) + 1);
+                }
+                else
+                {
+                    button.style.backgroundColor = "red";
+                    button.innerHTML = "Sbagliato";
+
+                    document.getElementById("inputDegree").value = Math.floor(correctSeconds / 3600);
+                    document.getElementById("inputMinute").value = Math.floor((correctSeconds % 3600) / 60);
+                    document.getElementById("inputSecond").value = (correctSeconds % 3600) % 60;
+
+                    document.getElementById("streak").innerHTML = "Streak: 0";
+                }
+
+                button.disabled = true;
+                document.getElementById("retry").style.display = "block";
+            }
+
+            function retry()
+            {
+                main();
+                document.getElementById("check").innerHTML = "Verifica";
+                document.getElementById("check").style.backgroundColor = "blue";
+                document.getElementById("retry").style.display = "none";
+
+                document.getElementById("inputDegree").value = null;
+                document.getElementById("inputMinute").value = null;
+                document.getElementById("inputSecond").value = null;
+
+                document.getElementById("check").disabled = false;
+            }
+        </script>
+    </body>
+</html>
