@@ -1,0 +1,233 @@
+<html>
+    <head>
+        <style>
+            body{
+                font-family: Arial, sans-serif;
+                color: white;
+                background-color: black;
+            }
+
+            .title{
+                font-size: 72px;
+                text-align: center;
+                width: 100%;
+                position: fixed;
+                top: 10%
+            }
+
+            .number{
+                font-size: 72px;
+                text-align: center;
+                width: 96px;
+                padding: 0;
+                margin: 0;
+            }
+
+            .numerator{
+                border-bottom: 1px solid white;
+            }
+
+            .center {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+            }
+            
+            button {
+                font-size: 64px;
+                width: 50%;
+                height: 10%;
+                background-color: #122dc5;
+                border: none;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                border-radius: 12px;
+            }
+
+            .sign{
+                font-size: 128px;
+                width: 25%;
+                height: 20%;
+                margin: 0 2% 0 2%;
+            }
+
+            .buttonContainer{
+                position: fixed;
+                top: 65%;
+
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                flex-direction: row;
+            }
+
+            #retry{
+                background-color: #ff8800;
+                position: fixed;
+                display: none;
+                top: 80%;
+                left: 25%;
+            }
+        </style>
+
+        <title>Comparazione</title>
+    </head>
+
+    <body onload="main()">
+        <h1 class="title">Seleziona il segno</h1>
+        <h1 class="title" id="streak" style="top:20%; color:#ff00f2;">Streak: 0</h1>
+        <div class="center">
+            <div>
+                <h1 class="number numerator" id="numerator1"></h1>
+                <h1 class="number" id="denominator1"></h1>
+            </div>
+            <h1 class="number" id="correctSign"></h1>
+            <div>
+                <h1 class="number numerator" id="numerator2"></h1>
+                <h1 class="number" id="denominator2"></h1>
+            </div>
+        </div>
+        <div class="buttonContainer">
+            <button onclick="check(this)" class="sign" style="background-color: #ff0000">&lt</button>
+            <button onclick="check(this)" class="sign" style="background-color: #ffd000">=</button>
+            <button onclick="check(this)" class="sign" style="background-color: #00e000">&gt</button>
+        </div>
+        <button id="retry" onclick="retry()">Nuovo esercizio</button>
+
+        <script>
+            function main()
+            {
+                let pattern = Math.floor(Math.random() * 4) + 1;
+
+                switch(pattern)
+                {
+                    case 1:
+                        let randomNumerator = Math.floor(Math.random() * 20) + 1;
+                        document.getElementById("numerator1").innerHTML = randomNumerator;
+                        document.getElementById("numerator2").innerHTML = randomNumerator;
+
+                        document.getElementById("denominator1").innerHTML = Math.floor(Math.random() * 20) + 1;
+                        document.getElementById("denominator2").innerHTML = Math.floor(Math.random() * 20) + 1;
+                        break;
+                    
+                    case 2:
+                        let randomDenominator = Math.floor(Math.random() * 20) + 1;
+                        document.getElementById("denominator1").innerHTML = randomDenominator;
+                        document.getElementById("denominator2").innerHTML = randomDenominator;
+
+                        document.getElementById("numerator1").innerHTML = Math.floor(Math.random() * 20) + 1;
+                        document.getElementById("numerator2").innerHTML = Math.floor(Math.random() * 20) + 1;
+                        break;
+
+                    case 3:
+                        document.getElementById("denominator1").innerHTML = Math.floor(Math.random() * 20) + 1;
+                        document.getElementById("denominator2").innerHTML = Math.floor(Math.random() * 20) + 1;
+
+                        document.getElementById("numerator1").innerHTML = Math.floor(Math.random() * 20) + 1;
+                        document.getElementById("numerator2").innerHTML = Math.floor(Math.random() * 20) + 1;
+                        break;
+
+                    case 4:
+                        let randomMultiplier = Math.floor(Math.random() * 10) + 1;
+
+                        document.getElementById("numerator1").innerHTML = Math.floor(Math.random() * 10) + 1;
+                        document.getElementById("denominator1").innerHTML = Math.floor(Math.random() * 10) + 1;
+
+                        document.getElementById("numerator2").innerHTML = document.getElementById("numerator1").innerHTML * randomMultiplier;
+                        document.getElementById("denominator2").innerHTML = document.getElementById("denominator1").innerHTML * randomMultiplier;
+                        break;
+                }
+            }
+
+            function check(button)
+            {
+                numerator1 = document.getElementById("numerator1").innerHTML;
+                denominator1 = document.getElementById("denominator1").innerHTML;
+
+                numerator2 = document.getElementById("numerator2").innerHTML;
+                denominator2 = document.getElementById("denominator2").innerHTML;
+
+                let result = (numerator1 / denominator1) - (numerator2 / denominator2);
+
+                let correctSign;
+
+                if(result > 0)
+                {
+                    if(button.innerHTML == "&gt;")
+                    {
+                        correct(button.innerHTML);
+                        return;
+                    }
+
+                    correctSign = "&gt;";
+                }
+                else if(result < 0)
+                {
+                    if(button.innerHTML == "&lt;")
+                    {
+                        correct(button.innerHTML);
+                        return;
+                    }
+
+                    correctSign = "&lt;";
+                }
+                else
+                {
+                    if(button.innerHTML == "=")
+                    {
+                        correct(button.innerHTML);
+                        return;
+                    }
+
+                    correctSign = "=";
+                }
+
+                incorrect(correctSign);
+            }
+
+            function correct(sign)
+            {
+                document.getElementById("correctSign").innerHTML = sign;
+
+                const r = /\d+/;
+                document.getElementById("streak").innerHTML = "Streak: " + (parseInt(document.getElementById("streak").innerHTML.match(r)) + 1);
+
+                document.getElementById("retry").style.display = "block";
+
+                let buttons = document.getElementsByClassName("sign");
+                buttons[0].disabled = true;
+                buttons[1].disabled = true;
+                buttons[2].disabled = true;
+            }
+
+            function incorrect(sign)
+            {
+                document.getElementById("correctSign").innerHTML = sign;
+
+                document.getElementById("streak").innerHTML = "Streak: 0";
+
+                document.getElementById("retry").style.display = "block";
+
+                let buttons = document.getElementsByClassName("sign");
+                buttons[0].disabled = true;
+                buttons[1].disabled = true;
+                buttons[2].disabled = true;
+            }
+
+            function retry()
+            {
+                main();
+                document.getElementById("correctSign").innerHTML = "";
+
+                document.getElementById("retry").style.display = "none";
+
+                let buttons = document.getElementsByClassName("sign");
+                buttons[0].disabled = false;
+                buttons[1].disabled = false;
+                buttons[2].disabled = false;
+            }
+        </script>
+    </body>
+</html>
