@@ -83,30 +83,28 @@
             }
         </style>
 
-        <title>Addizione sessagesimale</title>
+        <title>Moltiplicazione sessagesimale</title>
     </head>
 
     <body onload="main()">
-        <h1 class="title">Risolvi l'addizione</h1>
+        <h1 class="title">Risolvi la moltiplicazione</h1>
         <h1 class="title" id="streak" style="top:20%; color:#ff00f2;">Streak: 0</h1>
         <div class="center">
             <div>
-                <h1 class="number" id="degree1"></h1>
-                <h1 class="number" id="minute1"></h1>
-                <h1 class="number" id="second1"></h1>
+                <h1 class="number" id="degree"></h1>
+                <h1 class="number" id="minute"></h1>
+                <h1 class="number" id="second"></h1>
 
-                <h1 class="number">+</h1>
+                <h1 class="number">×</h1>
 
-                <h1 class="number" id="degree2"></h1>
-                <h1 class="number" id="minute2"></h1>
-                <h1 class="number" id="second2"></h1>
+                <h1 class="number" id="integer"></h1>
 
                 <h1 class="number">=</h1>
             </div>
             <div style="margin-top: 50px">
-                <input type="number" id="inputDegree"><h1 class="number" style="margin: 0" id="degree2">°</h1>
-                <input type="number" id="inputMinute"><h1 class="number" style="margin: 0" id="degree2">'</h1>
-                <input type="number" id="inputSecond"><h1 class="number" style="margin: 0" id="degree2">"</h1>
+                <input type="number" id="inputDegree" style="width: 200px"><h1 class="number" style="margin: 0">°</h1>
+                <input type="number" id="inputMinute"><h1 class="number" style="margin: 0">'</h1>
+                <input type="number" id="inputSecond"><h1 class="number" style="margin: 0">"</h1>
             </div>
         </div>
 
@@ -116,24 +114,22 @@
         <script>
             function main()
             {
-                document.getElementById("degree1").innerHTML = (Math.floor(Math.random() * 360) + 1) + "°";
-                document.getElementById("minute1").innerHTML = (Math.floor(Math.random() * 59) + 1) + "\'";
-                document.getElementById("second1").innerHTML = (Math.floor(Math.random() * 59) + 1) + "\"";
+                document.getElementById("degree").innerHTML = (Math.floor(Math.random() * 360) + 1) + "°";
+                document.getElementById("minute").innerHTML = (Math.floor(Math.random() * 59) + 1) + "\'";
+                document.getElementById("second").innerHTML = (Math.floor(Math.random() * 59) + 1) + "\"";
 
-                document.getElementById("degree2").innerHTML = (Math.floor(Math.random() * 360) + 1) + "°";
-                document.getElementById("minute2").innerHTML = (Math.floor(Math.random() * 59) + 1) + "\'";
-                document.getElementById("second2").innerHTML = (Math.floor(Math.random() * 59) + 1) + "\"";
+                document.getElementById("integer").innerHTML = Math.floor(Math.random() * 10) + 2;
             }
 
             function check()
             {
                 const r = /\d+/;
 
-                let seconds1 = parseInt(document.getElementById("degree1").innerHTML.match(r)) * 3600 + parseInt(document.getElementById("minute1").innerHTML.match(r)) * 60 + parseInt(document.getElementById("second1").innerHTML.match(r));
-                let seconds2 = parseInt(document.getElementById("degree2").innerHTML.match(r)) * 3600 + parseInt(document.getElementById("minute2").innerHTML.match(r)) * 60 + parseInt(document.getElementById("second2").innerHTML.match(r));
+                let seconds = parseInt(document.getElementById("degree").innerHTML.match(r)) * 3600 + parseInt(document.getElementById("minute").innerHTML.match(r)) * 60 + parseInt(document.getElementById("second").innerHTML.match(r));
+                let integer = parseInt(document.getElementById("integer").innerHTML);
                 let inputSeconds= parseInt(document.getElementById("inputDegree").value) * 3600 + parseInt(document.getElementById("inputMinute").value) * 60 + parseInt(document.getElementById("inputSecond").value);
 
-                let correctSeconds = seconds1 + seconds2;
+                let correctSeconds = seconds * integer;
 
                 button = document.getElementById("check");
                 if(inputSeconds == correctSeconds)

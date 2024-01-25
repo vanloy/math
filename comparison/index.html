@@ -83,7 +83,7 @@
                 <h1 class="number numerator" id="numerator1"></h1>
                 <h1 class="number" id="denominator1"></h1>
             </div>
-            <h1 class="number" id="correctSign"></h1>
+            <h1 class="number" id="correctSign">?</h1>
             <div>
                 <h1 class="number numerator" id="numerator2"></h1>
                 <h1 class="number" id="denominator2"></h1>
@@ -219,7 +219,7 @@
             function retry()
             {
                 main();
-                document.getElementById("correctSign").innerHTML = "";
+                document.getElementById("correctSign").innerHTML = "?";
 
                 document.getElementById("retry").style.display = "none";
 
