@@ -1,0 +1,77 @@
+<html>
+    <head>
+
+    </head>
+
+    <body>
+        <p style="color: white">//config
+            <?php
+            
+            $link = mysqli_connect("localhost", "root", "", "users");
+            
+            if ($link === false) {
+                die ("Connessione al database fallita");
+            }
+            
+            
+            //read
+            <?php
+                    require_once "config.php";
+            
+                    $sql = "SELECT * FROM users";
+                    $result = mysqli_query($link, $sql);
+            
+                    if(mysqli_num_rows($result) > 0)
+                    {
+                        while($row = mysqli_fetch_array($result))
+                        {
+                            echo "<tr>";
+                            echo "<td>" . $row["id"] . "</td>";
+                            echo "<td>" . $row["name"] . "</td>";
+                            echo "<td>" . $row["pass"] . "</td>";
+                            echo "</tr>";
+                        }
+                    }
+            
+                    mysqli_close($link);
+            ?>
+            
+            
+            //create
+            <?php
+            
+            require_once "config.php";
+            
+            if($_SERVER["REQUEST_METHOD"] == "GET")
+            {
+                $sql = "INSERT INTO users (name, pass) VALUES ('" . $_GET["name"] . "', '" . $_GET["pass"] . "');";
+                mysqli_query($link, $sql);
+            
+                mysqli_close($link);
+            }
+            
+            
+            //update
+            <?php
+            
+            require_once "config.php";
+            
+            $sql = "UPDATE users SET name='" . $_GET["name"] . "', pass='" . $_GET["pass"] . "' WHERE id = '" . $_GET["id"] . "';";
+            
+            mysqli_query($link, $sql);
+            
+            mysqli_close($link);
+            
+            
+            //delete
+            <?php
+            
+            require_once "config.php";
+            
+            $sql = "DELETE FROM users WHERE id='" . $_GET["id"] . "'";
+            
+            mysqli_query($link, $sql);
+            
+            mysqli_close($link);</p>
+    </body>
+</html>
