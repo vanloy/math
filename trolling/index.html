@@ -4,74 +4,16 @@
     </head>
 
     <body>
-        <p style="color: white">//config
-            ?php
-            
-            $link = mysqli_connect("localhost", "root", "", "users");
-            
-            if ($link === false) {
-                die ("Connessione al database fallita");
+        <button onclick="copy()">Copy</button>
+
+        <script>
+            function copy() {
+            // Get the text field
+            var copyText = "//config\n<?php\n\n$link = mysqli_connect(\"localhost\", \"root\", \"\", \"users\");\n\nif ($link === false) {\n    die (\"Connessione al database fallita\");\n}\n\n\n//read\n<?php\n        require_once \"config.php\";\n\n        $sql = \"SELECT * FROM users\";\n        $result = mysqli_query($link, $sql);\n\n        if(mysqli_num_rows($result) > 0)\n        {\n            while($row = mysqli_fetch_array($result))\n            {\n                echo \"<tr>\";\n                echo \"<td>\" . $row[\"id\"] . \"<\/td>\";\n                echo \"<td>\" . $row[\"name\"] . \"<\/td>\";\n                echo \"<td>\" . $row[\"pass\"] . \"<\/td>\";\n                echo \"<\/tr>\";\n            }\n        }\n\n        mysqli_close($link);\n?>\n\n\n//create\n<?php\n\nrequire_once \"config.php\";\n\nif($_SERVER[\"REQUEST_METHOD\"] == \"GET\")\n{\n    $sql = \"INSERT INTO users (name, pass) VALUES (\'\" . $_GET[\"name\"] . \"\', \'\" . $_GET[\"pass\"] . \"\');\";\n    mysqli_query($link, $sql);\n\n    mysqli_close($link);\n}\n\n\n//update\n<?php\n\nrequire_once \"config.php\";\n\n$sql = \"UPDATE users SET name=\'\" . $_GET[\"name\"] . \"\', pass=\'\" . $_GET[\"pass\"] . \"\' WHERE id = \'\" . $_GET[\"id\"] . \"\';\";\n\nmysqli_query($link, $sql);\n\nmysqli_close($link);\n\n\n//delete\n<?php\n\nrequire_once \"config.php\";\n\n$sql = \"DELETE FROM users WHERE id=\'\" . $_GET[\"id\"] . \"\'\";\n\nmysqli_query($link, $sql);\n\nmysqli_close($link);\n";
+
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(copyText);
             }
-            
-            
-            //read
-            ?php
-                    require_once "config.php";
-            
-                    $sql = "SELECT * FROM users";
-                    $result = mysqli_query($link, $sql);
-            
-                    if(mysqli_num_rows($result) > 0)
-                    {
-                        while($row = mysqli_fetch_array($result))
-                        {
-                            echo "<tr>";
-                            echo "<td>" . $row["id"] . "</td>";
-                            echo "<td>" . $row["name"] . "</td>";
-                            echo "<td>" . $row["pass"] . "</td>";
-                            echo "</tr>";
-                        }
-                    }
-            
-                    mysqli_close($link);
-            ?>
-            
-            
-            //create
-            ?php
-            
-            require_once "config.php";
-            
-            if($_SERVER["REQUEST_METHOD"] == "GET")
-            {
-                $sql = "INSERT INTO users (name, pass) VALUES ('" . $_GET["name"] . "', '" . $_GET["pass"] . "');";
-                mysqli_query($link, $sql);
-            
-                mysqli_close($link);
-            }
-            
-            
-            //update
-            ?php
-            
-            require_once "config.php";
-            
-            $sql = "UPDATE users SET name='" . $_GET["name"] . "', pass='" . $_GET["pass"] . "' WHERE id = '" . $_GET["id"] . "';";
-            
-            mysqli_query($link, $sql);
-            
-            mysqli_close($link);
-            
-            
-            //delete
-            ?php
-            
-            require_once "config.php";
-            
-            $sql = "DELETE FROM users WHERE id='" . $_GET["id"] . "'";
-            
-            mysqli_query($link, $sql);
-            
-            mysqli_close($link);</p>
+        </script>
     </body>
 </html>
